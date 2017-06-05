@@ -6,4 +6,8 @@ __pycache__
 venv
 
 # Databases
+# Some working files included:
 *.db
+db/database.py
+db/database_old.py
+db/models_old.py
