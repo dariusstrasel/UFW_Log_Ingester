@@ -19,11 +19,8 @@ def index():
 @app.route('/api/v1/log_events')
 def log_events():
     """Query all the log_events in the database and if None returned, insert a log_file."""
-    response_message = {'results': api_controller.get_all_log_events()}
-    # If no results
-    if len(response_message['results']) < 2:
-        api_controller.insert_log_file("./logs/ufw.log")
-    print(len(response_message))
+    print("getting...")
+    response_message = api_controller.get_all_log_events()
     return jsonify(response_message)
 
 
