@@ -7,15 +7,23 @@ import json
 def get_all_log_events():
     """Query all log_events in the database and return as JSON.
     () -> JSON"""
+
     query_results = Log_Events.query.all()
-    output = []
+    output = {'results': []}
     for result in query_results:
         new_result = result.__dict__
 
         # Remove unneeded ORM metadata
         del new_result['_sa_instance_state']
-        output.append(new_result)
-    return json.dumps([result for result in output])
+        output['results'].append(new_result)
+
+    # If no results, insert log_file.
+    if len(output['results']) < 2:
+        print("Database is empty: inserted new log_file.")
+        insert_log_file("./logs/ufw.log")
+        output['results'].append(None)
+
+    return output
 
 
 def insert_log_event(raw_log_event):
